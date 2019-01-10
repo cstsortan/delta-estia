@@ -61,10 +61,18 @@ export default class Post extends Component {
 				<div class={style.postFloor}>
 					{post.floor + 3}ος Οροφος
 				</div>
+
 				<div class={style.commentsForm}>
-					<input value={this.state.text} onInput={linkState(this, 'text')} class={style.commentsInput} type="text" placeholder="Σχολιάστε" />
+					<input
+						value={this.state.text}
+						onInput={linkState(this, 'text')}
+						class={style.commentsInput}
+						type="text"
+						placeholder="Σχολιάστε"
+					/>
 					<button onClick={this.postComment} class={style.commentsSubmitButton}>Αποστολή</button>
 				</div>
+
 				<CommentsList postId={post.id} />
 			</div>
 		);
