@@ -20,7 +20,8 @@ export default class Post extends Component {
 							text: this.state.text,
 							timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 							authorName: user.displayName,
-							photoUrl: user.photoURL
+							photoUrl: user.photoURL,
+							userUid: user.uid
 						});
 					this.setState({
 						text: ''
@@ -35,7 +36,8 @@ export default class Post extends Component {
 					text: this.state.text,
 					timestamp: firebase.firestore.FieldValue.serverTimestamp(),
 					authorName: user.displayName,
-					photoUrl: user.photoURL
+					photoUrl: user.photoURL,
+					userUid: user.uid
 				});
 			this.setState({
 				text: ''
