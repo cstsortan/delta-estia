@@ -6,6 +6,7 @@ import Header from './header';
 // Code-splitting is automated for routes
 import Home from '../routes/home';
 import NewPost from '../routes/new-post';
+import EmojiPicker from '../routes/emoji-picker';
 
 export default class App extends Component {
 	
@@ -24,6 +25,7 @@ export default class App extends Component {
 				<Router onChange={this.handleRoute}>
 					<Home path="/" />
 					<NewPost path="/new-post/" />
+					<EmojiPicker path="/emoji-picker/:postId" />
 				</Router>
 			</div>
 		);

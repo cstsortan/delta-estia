@@ -9,7 +9,7 @@ class NewPost extends Component {
 		text: '',
 		floor: 0,
 		imageUrl: '',
-		color: 'red'
+		color: 'default',
 	}
 	onImageChange(event) {
 		if (!event.target.files[0]) return;
@@ -21,7 +21,10 @@ class NewPost extends Component {
 		if (!this.state.text === '' || !this.imageUrl === '') return;
 		firebase.firestore().collection('posts')
 			.add({
-				...this.state,
+				text: this.state.text,
+				floor: this.state.floor,
+				imageUrl: this.state.imageUrl,
+				color: this.state.color,
 				timestamp: firebase.firestore.FieldValue.serverTimestamp()
 			});
 		this.setState({
@@ -36,6 +39,7 @@ class NewPost extends Component {
 			floor: parseInt(e.target.value, 10)
 		});
 	}
+
 	constructor() {
 		super();
 		this.onImageChange = this.onImageChange.bind(this);

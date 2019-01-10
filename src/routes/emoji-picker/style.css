@@ -1,0 +1,22 @@
+.home {
+    padding: 56px 20px;
+	min-height: 100%;
+    width: 100%;
+    align-items: center;
+	display: flex;
+	flex-direction: column;
+}
+
+.emojiList {
+    display: flex;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.emojiControls {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+}

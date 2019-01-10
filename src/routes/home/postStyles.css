@@ -39,13 +39,7 @@
 }
 
 .commentsSubmitButton {
-    border: none;
-    background-color: #8F00BB;
-    color: white;
-    border-radius: 8px;
-    margin: 2px 0;
     margin-left: 10px;
-    padding: 8px;
 }
 .commentsInput {
     flex: 1;
@@ -53,6 +47,8 @@
     border-radius: 8px;
     border-width: 1px;
     outline: none;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 .commentsInput::placeholder {
     font-style: italic;

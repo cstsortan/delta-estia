@@ -5,9 +5,23 @@ import 'firebase/firestore';
 import 'firebase/storage';
 import 'firebase/auth';
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faChevronCircleDown, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
+import {
+	faChevronCircleDown,
+	faPlusCircle,
+	faArrowAltCircleRight,
+	faTimesCircle,
+	faEraser,
+	faKissWinkHeart
+} from '@fortawesome/free-solid-svg-icons';
 
-library.add(faChevronCircleDown, faPlusCircle);
+library.add(
+	faChevronCircleDown,
+	faPlusCircle,
+	faArrowAltCircleRight,
+	faTimesCircle,
+	faEraser,
+	faKissWinkHeart
+);
 
 export default App;
 const config = {
