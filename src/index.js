@@ -12,7 +12,8 @@ import {
 	faTimesCircle,
 	faEraser,
 	faKissWinkHeart,
-	faBars
+	faBars,
+	faFlask
 } from '@fortawesome/free-solid-svg-icons';
 
 library.add(
@@ -22,7 +23,8 @@ library.add(
 	faTimesCircle,
 	faEraser,
 	faKissWinkHeart,
-	faBars
+	faBars,
+	faFlask,
 );
 
 export default App;

@@ -32,4 +32,34 @@
     user-select: none;
     cursor: pointer;
     max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tags {
+    display: flex;
+}
+
+.status {
+    color: lightgreen;
+}
+
+.experimentalTag {
+    margin: 2px;
+    font-size: 14px;
+    font-weight: normal;
+    /* color: teal; */
+    background-color: greenyellow;
+    padding: 2px;
+    border-radius: 4px;
+}
+
+.comingSoonTag {
+    font-size: 14px;
+    font-weight: normal;
+    color: white;
+    background-color: #2C2C2C;
+    padding: 2px;
+    border-radius: 4px;
 }

@@ -12,7 +12,7 @@ import Menu from '../routes/menu';
 export default class App extends Component {
 
 	state = {
-		menuOpen: true
+		menuOpen: false
 	};
 	
 	/** Gets fired when the route changes.

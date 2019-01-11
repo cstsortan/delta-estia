@@ -73,7 +73,7 @@ export default class Post extends Component {
 				<p class={style.postText +' '+ style[`color-${post.color}`]}>{post.text}</p>
 				<img class={style.postImage} src={post.imageUrl} />
 				<div class={style.postFloor}>
-					{post.floor + 3}ος Οροφος
+					{post.floor === -3 ? 'Ισόγειο' : `${post.floor+3}ος Όροφος`}
 				</div>
 				<div class={style.commentsForm}>
 					<FontAwesomeIcon onClick={this.addEmojis} size="lg" color="orange" icon="kiss-wink-heart" class={style.commentsSubmitButton} />

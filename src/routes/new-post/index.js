@@ -51,6 +51,9 @@ class NewPost extends Component {
 				<div class={style.floorRoot}>
 					<label value={this.state.floor} class={style.floorLabel} for="floor">Όροφος</label>
 					<select onInput={this.onFloorSelected} id="floor" class={style.newPostFloor}>
+						<option value={-3}>Ισόγειο</option>
+						<option value={-2}>1os</option>
+						<option value={-1}>2os</option>
 						<option value={0}>3os</option>
 						<option value={1}>4os</option>
 						<option value={2}>5os</option>
