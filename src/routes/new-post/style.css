@@ -17,11 +17,23 @@
 .newPostText {
     height: 200px;
     margin-top: 20px;
+    outline: none;
+    border: 1px solid purple;
+    border-radius: 8px;
+    padding: 8px;
 }
 
 .newPostFloor {
-    /* margin-top: 20px;
-    margin-left: 20px; */
+    background-color: purple;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 4px;
+    outline: none;
+}
+
+.newPostFloor::selection {
+    background-color: red;
 }
 
 .newPostFileInput {
@@ -39,4 +51,9 @@
 .newPostSubmitButton {
     padding: 20px 0;
     font-size: 20px;
+    background-color: purple;
+    border: none;
+    outline: none;
+    border-radius: 8px;
+    color: white;
 }

@@ -9,7 +9,7 @@ class NewPost extends Component {
 		text: '',
 		floor: 0,
 		imageUrl: '',
-		color: 'default',
+		color: 'default'
 	}
 	onImageChange(event) {
 		if (!event.target.files[0]) return;

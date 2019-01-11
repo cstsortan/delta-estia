@@ -6,9 +6,17 @@ import linkState from 'linkstate';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { route } from 'preact-router';
 
-// eslint-disable-next-line react/prefer-stateless-function
 export default class Post extends Component {
 	addEmojis = () => {
+		let user = firebase.auth().currentUser;
+		if (!user) {
+			firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())
+				.then(cred => {
+					if (!cred) return;
+					route(`/emoji-picker/${this.props.post.id}`, true);
+				});
+			return;
+		}
 		route(`/emoji-picker/${this.props.post.id}`, true);
 	}
 	postComment() {
@@ -68,7 +76,7 @@ export default class Post extends Component {
 					{post.floor + 3}ος Οροφος
 				</div>
 				<div class={style.commentsForm}>
-					<FontAwesomeIcon onClick={this.addEmojis} size="2x" color="orange" icon="kiss-wink-heart" class={style.commentsSubmitButton} />
+					<FontAwesomeIcon onClick={this.addEmojis} size="lg" color="orange" icon="kiss-wink-heart" class={style.commentsSubmitButton} />
 					<input
 						value={this.state.text}
 						onInput={linkState(this, 'text')}
@@ -76,7 +84,7 @@ export default class Post extends Component {
 						type="text"
 						placeholder="Σχολιάστε"
 					/>
-					<FontAwesomeIcon onClick={this.postComment} size="2x" color="purple" icon="arrow-alt-circle-right" class={style.commentsSubmitButton} />
+					<FontAwesomeIcon onClick={this.postComment} size="lg" color="purple" icon="arrow-alt-circle-right" class={style.commentsSubmitButton} />
 				</div>
 
 				<CommentsList postId={post.id} />

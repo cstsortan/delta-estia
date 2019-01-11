@@ -11,6 +11,7 @@
 .postImage {
     max-height: 200px;
     width: auto;
+    max-width: 85%;
     margin-bottom: 20px;
 }
 

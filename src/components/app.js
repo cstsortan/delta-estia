@@ -7,8 +7,13 @@ import Header from './header';
 import Home from '../routes/home';
 import NewPost from '../routes/new-post';
 import EmojiPicker from '../routes/emoji-picker';
+import Menu from '../routes/menu';
 
 export default class App extends Component {
+
+	state = {
+		menuOpen: true
+	};
 	
 	/** Gets fired when the route changes.
 	 *	@param {Object} event		"change" event from [preact-router](http://git.io/preact-router)
@@ -18,10 +23,25 @@ export default class App extends Component {
 		this.currentUrl = e.url;
 	};
 
-	render() {
+	onMenuItemOpened = () => {
+		this.setState({
+			menuOpen: true
+		});
+	};
+
+	onMenuClosed = () => {
+		this.setState({
+			menuOpen: false
+		});
+	};
+
+	render({}, { menuOpen }) {
+		if (menuOpen) {
+			return <Menu onMenuClosed={this.onMenuClosed} />;
+		}
 		return (
 			<div id="app">
-				<Header />
+				<Header onMenuItemOpened={this.onMenuItemOpened} />
 				<Router onChange={this.handleRoute}>
 					<Home path="/" />
 					<NewPost path="/new-post/" />
