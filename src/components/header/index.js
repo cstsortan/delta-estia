@@ -11,6 +11,9 @@ const Header = ({ onMenuItemOpened }) => (
 		<h1>Δ Εστία</h1>
 		<div class={style.space} />
 		<nav>
+			<Link activeClassName={style.active} href="/chat">
+				<FontAwesomeIcon color="white" icon="envelope" />
+			</Link>
 			<Link activeClassName={style.active} href="/">Ανομολόγητα</Link>
 			<Link activeClassName={style.active} href="/new-post">
 				<FontAwesomeIcon icon="plus-circle" />
