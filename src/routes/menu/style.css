@@ -23,8 +23,8 @@
 }
 
 .menuItem {
-    background-color: #ADADAD;
-    color: purple; 
+    background-color: #36383C;
+    color: white; 
     padding: 16px 36px;
     border-radius: 16px;
     font-size: 18px;
@@ -35,6 +35,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-decoration: none;
 }
 
 .tags {
@@ -49,11 +50,12 @@
     margin: 2px;
     font-size: 14px;
     font-weight: normal;
-    /* color: teal; */
+    color: #36383C;
     background-color: greenyellow;
     padding: 2px;
     border-radius: 4px;
 }
+comingSoon
 
 .comingSoonTag {
     font-size: 14px;
@@ -62,4 +64,8 @@
     background-color: #2C2C2C;
     padding: 2px;
     border-radius: 4px;
+}
+
+.link {
+    text-decoration: none;
 }

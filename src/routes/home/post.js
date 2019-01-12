@@ -20,6 +20,7 @@ export default class Post extends Component {
 		route(`/emoji-picker/${this.props.post.id}`, true);
 	}
 	postComment() {
+		if (this.state.text.trim() !== '') return;
 		let user = firebase.auth().currentUser;
 		if (!user) {
 			firebase.auth().signInWithPopup(new firebase.auth.GoogleAuthProvider())

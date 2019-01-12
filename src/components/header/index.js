@@ -12,7 +12,7 @@ const Header = ({ onMenuItemOpened }) => (
 		<div class={style.space} />
 		<nav>
 			<Link activeClassName={style.active} href="/">Ανομολόγητα</Link>
-			<Link activeClassName={style.actiev} href="/new-post">
+			<Link activeClassName={style.active} href="/new-post">
 				<FontAwesomeIcon icon="plus-circle" />
 			</Link>
 		</nav>
