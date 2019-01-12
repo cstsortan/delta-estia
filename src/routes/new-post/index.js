@@ -18,7 +18,7 @@ class NewPost extends Component {
 		ref.put(event.target.files[0]).then(res => ref.getDownloadURL()).then(imageUrl => this.setState({ imageUrl }));
 	}
 	onSubmitted() {
-		if (!this.state.text === '' || !this.imageUrl === '') return;
+		if (this.state.text.trim() === '' || this.imageUrl === '') return;
 		firebase.firestore().collection('posts')
 			.add({
 				text: this.state.text,
