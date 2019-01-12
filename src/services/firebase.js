@@ -2,7 +2,7 @@ import firebase from 'firebase/app';
 import {
 	collectionData
 } from 'rxfire/firestore';
-import { switchMap } from 'rxjs/operators';
+import { switchMap, map } from 'rxjs/operators';
 
 export function getPosts(limit$) {
 	return limit$.pipe(switchMap(limit => {
@@ -11,4 +11,16 @@ export function getPosts(limit$) {
 			.limit(limit);
 		return collectionData(query, 'id');
 	}));
+}
+export function getWashersStatus() {
+	const query = firebase.firestore()
+		.collection('washers');
+	return collectionData(query)
+		.pipe(map(docs => docs.filter(washer => washer.functional && isDone(washer.endsAt)).length));
+}
+
+
+function isDone(endsAt) {
+	const delta = endsAt.toMillis() - Date.now();
+	return delta < 0;
 }

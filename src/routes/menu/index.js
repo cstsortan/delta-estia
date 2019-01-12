@@ -3,9 +3,10 @@ import style from './style';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import MenuItem from './MenuItem';
 import { Link } from 'preact-router/match';
-import firebase from 'firebase/app';
-import 'firebase/firestore';
-import { docData } from 'rxfire/firestore';
+// import firebase from 'firebase/app';
+// import 'firebase/firestore';
+// import { docData } from 'rxfire/firestore';
+import { getWashersStatus } from '../../services/firebase';
 
 export default class Menu extends Component {
 	openWashers = () => {
@@ -15,8 +16,11 @@ export default class Menu extends Component {
 		washersCount: 0
 	};
 	componentDidMount = () => {
-		this._unsub = docData(firebase.firestore().doc('status/washers'))
-			.subscribe(washerStatus => this.setState({ washersCount: washerStatus.count }));
+		this._unsub = getWashersStatus() //docData(firebase.firestore().doc('status/washers'))
+			.subscribe(washerStatus => {
+				console.log(washerStatus);
+				this.setState({ washersCount: washerStatus });
+			});
 	}
 
 	componentWillUnmount() {
