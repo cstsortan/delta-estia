@@ -79,7 +79,7 @@ export default class Movies extends Component {
 								<div class={style.voters}>
 									{movie.voters.map(voter => <img class={style.voter} src={voter} />)}
 								</div>
-								<button onClick={() => this.voteMovie(movie.id)}>Vote</button>
+								<button onClick={() => this.voteMovie(movie.id)}>Ψηφίστε</button>
 							</MovieItem>))}
 						</div>
 					</div>}
