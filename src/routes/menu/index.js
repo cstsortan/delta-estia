@@ -36,10 +36,12 @@ export default class Menu extends Component {
 				<div class={style.menuItems}>
 					<Link href="/washers" class={style.link}>
 						<MenuItem onMenuItemClicked={this.openWashers}
-							experimental
-							washerStatus={washersCount}
 							text="Πλυντήρια"
-						/>
+						><div class={style.status}>Status: {washersCount ? washersCount : '-'}/6</div>
+						</MenuItem>
+					</Link>
+					<Link href="/movies" class={style.link}>
+						<MenuItem onMenuItemClicked={this.openWashers} text="Movies" experimental />
 					</Link>
 				</div>
 			</div>);

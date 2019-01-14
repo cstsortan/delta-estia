@@ -1,0 +1,57 @@
+.moviesRoot {
+    height: 100%;
+    padding-top: 56px;
+    display: flex;
+    flex-direction: column;
+}
+
+.moviesForm {
+    display: flex;
+    width: 100%;
+    padding: 20px;
+}
+.movieInput {
+    flex: 1;
+    margin-left: 20px;
+}
+.movieButton {
+    margin-left: 20px;
+}
+.suggestions {
+    /* display: flex;
+    flex-direction: column; */
+}
+.results {
+    display: flex;
+    flex-direction: column;
+}
+.movieItem {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    margin: 8px;
+    padding: 8px;
+}
+.movieItemStart{
+    display: flex;
+    flex-direction: column;
+}
+.movieItemCenter {
+    padding: 8px;
+}
+.movieItemInfo {
+    display: flex;
+    flex-direction: row;
+}
+.openSuggestionsButton {
+    margin: 10px;
+}
+.voter {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+.voters {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto;
+}

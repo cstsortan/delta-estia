@@ -10,6 +10,7 @@ import EmojiPicker from '../routes/emoji-picker';
 import Menu from '../routes/menu';
 import Washers from '../routes/washers';
 import Chat from '../routes/chat/Chat';
+import Movies from '../routes/movies';
 
 export default class App extends Component {
 
@@ -50,6 +51,7 @@ export default class App extends Component {
 					<EmojiPicker path="/emoji-picker/:postId" />
 					<Washers path="/washers/" />
 					<Chat path="/chat/" />
+					<Movies path="/movies" />
 				</Router>
 			</div>
 		);

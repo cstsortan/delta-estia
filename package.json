@@ -43,7 +43,8 @@
     "react-emoji": "^0.5.0",
     "react-emoji-render": "^0.5.0",
     "rxfire": "^3.2.2",
-    "rxjs": "^6.3.3"
+    "rxjs": "^6.3.3",
+    "themoviedb-javascript-library": "^3.0.3"
   },
   "jest": {
     "verbose": true,
