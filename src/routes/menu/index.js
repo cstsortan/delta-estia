@@ -40,9 +40,9 @@ export default class Menu extends Component {
 						><div class={style.status}>Status: {washersCount ? washersCount : '-'}/6</div>
 						</MenuItem>
 					</Link>
-					<Link href="/movies" class={style.link}>
+					{/* <Link href="/movies" class={style.link}>
 						<MenuItem onMenuItemClicked={this.openWashers} text="Movies" experimental />
-					</Link>
+					</Link> */}
 				</div>
 			</div>);
 	}

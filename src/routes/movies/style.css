@@ -13,6 +13,7 @@
 .movieInput {
     flex: 1;
     margin-left: 20px;
+    width: 100%;
 }
 .movieButton {
     margin-left: 20px;
@@ -20,6 +21,7 @@
 .suggestions {
     /* display: flex;
     flex-direction: column; */
+    overflow-y: auto;
 }
 .results {
     display: flex;
@@ -54,4 +56,70 @@
 .voters {
     display: grid;
     grid-template-columns: auto auto auto auto auto auto auto;
+}
+
+.pgContainer {
+    list-style: none;
+    display: grid;
+    /* flex-direction: row; */
+    grid-template-columns: auto auto auto auto auto auto auto auto;
+    width: 100%;
+    justify-content: space-between;
+    padding: 0;
+    align-items: center;
+}
+
+.pgBtn {
+    background-color: #007ACC;
+    color: white;
+    margin: 2px;
+    padding: 4px;
+    border-radius: 8px;
+}
+.pgBtn a {
+    user-select: none;
+    outline: none;
+}
+.pgActive {
+    background-color: blueviolet;
+    color: white;
+    margin: 3px;
+    padding: 6px;
+    border-radius: 8px;
+}
+
+.searchOptions {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-top: 10px;
+    user-select: none;
+}
+.searchOptionActive {
+    background-color: blueviolet;
+    color: white;
+    margin: 3px;
+    padding: 6px;
+    border-radius: 8px;
+}
+.genreName {
+    user-select: none;
+}
+.genre {
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid black;
+}
+.textCenter {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 25px;
+}
+
+.opaque {
+    opacity: 0.5;
+}
+
+.btn {
+    width: 100%;
 }

@@ -2,12 +2,36 @@
 import { h, Component } from 'preact';
 import style from './style';
 import linkState from 'linkstate';
-import { searchMovies } from '../../services/tmdb';
+import { searchMovies, getGenres } from '../../services/tmdb';
 import MovieItem from './MovieItem';
-import { suggestMovie, getSuggestedMovies, voteMovie } from '../../services/firebase';
+import { suggestMovie, getSuggestedMovies, voteMovie, voteGenre } from '../../services/firebase';
 import firebase from 'firebase/app';
+import ReactPaginate from 'react-paginate';
+import { BehaviorSubject, combineLatest, from } from 'rxjs';
+import MoviesSuggestionsList from './MoviesSuggestionsList';
+
 const auth = firebase.auth();
 export default class Movies extends Component {
+	
+	mode$ = new BehaviorSubject('search');
+	page$ = new BehaviorSubject(1);
+	title$ = new BehaviorSubject('');
+	genre$ = new BehaviorSubject(null);
+
+	nextPage = (page) => {
+		this.page$.next(page.selected + 1);
+		this.resultsRef.scrollTo(0, 0);
+	}
+	selectSearch = () => {
+		this.page$.next(1);
+		this.mode$.next('search');
+		this.setState({ discover: false });
+	}
+	selectDiscover = () => {
+		this.page$.next(1);
+		this.mode$.next('discover');
+		this.setState({ discover: true });
+	}
 	openSuggestions = () => {
 		this.setState({
 			suggesting: true
@@ -26,6 +50,14 @@ export default class Movies extends Component {
 		}
 		voteMovie(movieId, currentUser.uid, currentUser.photoURL);
 	};
+	voteGenre = (genreId) => {
+		const currentUser = auth.currentUser;
+		if (!currentUser) {
+			auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+			return;
+		}
+		voteGenre(genreId, currentUser.uid, currentUser.photoURL);
+	}
 	suggest = (movie) => {
 		this.setState({
 			suggesting: false
@@ -33,32 +65,73 @@ export default class Movies extends Component {
 		suggestMovie(movie);
 	};
 	searchMovies = () => {
-		searchMovies(this.state.movieText).then(res => {
-			const json = JSON.parse(res);
-			this.setState({ movieResults: json.results });
-		});
+		this.page$.next(1);
+		this.title$.next(this.state.movieText);
 	};
 	state = {
+		discover: false,
 		suggesting: false,
+		suggestingGenre: true,
 		movieText: '',
-		movieResults: [],
-		movies: []
+		movieResults: null,
+		movies: [],
+		genreVoters: {},
+		allGenres: [],
+		selectedGenre: null
 	};
+
 	
 	componentWillMount() {
-		this.moviesSub = getSuggestedMovies().subscribe(movies => this.setState({ movies }));
+		const date = new Date();
+		date.setHours(0,0,0,0);
+		if (date.getDay() >= 3) {
+			this.setState({ suggestingGenre: false });
+		}
 	}
-
+	
+	
+	componentDidMount() {
+		this.moviesSub = searchMovies(this.title$, this.page$, this.mode$, this.genre$).subscribe(movieResults => {
+			this.setState({
+				movieResults
+			});
+		});
+		this.sub = combineLatest(
+			getSuggestedMovies(),
+			from(getGenres())
+		).subscribe(([options, allGenres]) => {
+			const sortedGenres = options === null ? allGenres : allGenres.sort((a, b) => (options.genreVoters[b.id] || []).length - (options.genreVoters[a.id] || []).length);
+			this.setState({
+				movies: options.movies,
+				genreVoters: options.genreVoters,
+				allGenres: sortedGenres,
+				selectedGenre: sortedGenres[0]
+			});
+			this.genre$.next(sortedGenres[0]);
+		});
+	}
 	componentWillUnmount() {
+		this.sub.unsubscribe();
 		this.moviesSub.unsubscribe();
 	}
-	
-	
-	render({ }, { suggesting, movieText, movieResults, movies }) {
+	render({ }, { suggesting, movieText, movieResults, movies, discover, suggestingGenre, genreVoters, allGenres, selectedGenre }) {
 		return (
 			<div class={style.moviesRoot}>
-				{suggesting ? <div class={style.suggestions}>
-					<div class={style.moviesForm}>
+				{suggestingGenre ? <div>
+					<div class={style.textCenter}>Παρακαλώ επιλέξτε είδος</div>
+					{allGenres.map(genre => (<div class={style.genre} onClick={() => this.voteGenre(genre.id)} key={genre.id}>
+						<h4 class={style.genreName}>{genre.name}</h4>
+						<div class={style.voters}>{genreVoters[genre.id] ?
+							genreVoters[genre.id]
+								.map(voterImage =>
+									<img class={style.voter} key={voterImage} src={voterImage} />) : null}</div>
+					</div>))}
+				</div> : suggesting ? <div ref={results => this.resultsRef = results} class={style.suggestions}>
+					<div class={style.searchOptions}>
+						<div class={!discover && style.searchOptionActive} onClick={this.selectSearch}>Search</div>
+						<div class={discover && style.searchOptionActive} onClick={this.selectDiscover}>Discover</div>
+					</div>
+					{!discover ? <div class={style.moviesForm}>
 						<button onClick={this.closeSuggestions}>Πίσω</button>
 						<input
 							value={movieText}
@@ -67,22 +140,22 @@ export default class Movies extends Component {
 							placeholder="Τίτλος ταινίας"
 						/>
 						<button onClick={this.searchMovies} class={style.movieButton}>Αναζήτηση</button>
-					</div>
-					<div class={style.results}>
-						{movieResults.map(movie => <MovieItem movie={movie}><button onClick={() => this.suggest(movie)}>Προτείνω</button></MovieItem>)}
-					</div>
+					</div> : null}
+					{movieResults ? <div class={style.results}>
+						<div class={style.pgBtn}>Random Page</div>
+						{movieResults.results.map(movie => <MovieItem selectedGenre={selectedGenre.id} key={movie.id} movie={movie}><button onClick={() => this.suggest(movie)}>Προτείνω</button></MovieItem>)}
+						<ReactPaginate
+							containerClassName={style.pgContainer}
+							previousClassName={style.pgBtn}
+							nextClassName={style.pgBtn}
+							pageClassName={style.pgBtn}
+							activeClassName={style.pgActive}
+							onPageChange={this.nextPage}
+							pageCount={movieResults.total_pages}
+						/>
+					</div> : null}
 				</div>
-				 : <div class={style.moviesList}>
-						<button onClick={this.openSuggestions} class={style.openSuggestionsButton}>Προτείνετε ταινία για την Κυριακή!</button>
-						<div>
-							{movies.map(movie => (<MovieItem movie={movie}>
-								<div class={style.voters}>
-									{movie.voters.map(voter => <img class={style.voter} src={voter} />)}
-								</div>
-								<button onClick={() => this.voteMovie(movie.id)}>Ψηφίστε</button>
-							</MovieItem>))}
-						</div>
-					</div>}
+				 :<MoviesSuggestionsList movies={movies} selectedGenre={selectedGenre} voteMovie={this.voteMovie} />}
 			</div>
 		);
 	}

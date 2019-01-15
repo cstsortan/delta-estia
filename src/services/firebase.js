@@ -54,12 +54,15 @@ export function suggestMovie(movie) {
 		}, { merge: true });
 }
 
-export function getSuggestedMovies(uid) {
+export function getSuggestedMovies() {
 
 	return docData(getMovieWeekDoc()).pipe(map(week => {
 		if (!week.movies) return null;
 		let movies = [];
 		let votes = week.votes;
+		let weekOptions = {};
+		let genreVoters = {
+		};
 		Object.values(week.movies).forEach(movie => {
 			let m = movie;
 			m.voters = [];
@@ -71,16 +74,37 @@ export function getSuggestedMovies(uid) {
 			}
 			movies = [...movies, m];
 		});
-		return movies.sort((a, b) => b.voters.length - a.voters.length);
+		weekOptions.movies =  movies.sort((a, b) => b.voters.length - a.voters.length);
+		if (week.genreVotes) {
+			Object.keys(week.genreVotes).forEach(userUid => {
+				const genreId = week.genreVotes[userUid].genreId;
+				const photoUrl = week.genreVotes[userUid].photoUrl;
+				genreVoters[genreId] = [
+					...(genreVoters[genreId] ? genreVoters[genreId] : []),
+					photoUrl
+				];
+			});
+		}
+		weekOptions.genreVoters = genreVoters;
+		return weekOptions;
 	}));
+	
 }
 
 export function voteMovie(movieId, userUid, photoUrl) {
-	return getMovieWeekDoc().update({
+	return getMovieWeekDoc().set({
 		votes: {
 			[userUid]: { movieId, photoUrl }
 		}
-	});
+	}, { merge: true });
+}
+
+export function voteGenre(genreId, userUid, photoUrl) {
+	return getMovieWeekDoc().set({
+		genreVotes: {
+			[userUid]: { genreId, photoUrl }
+		}
+	}, { merge: true });
 }
 
 function getMovieWeekDoc() {

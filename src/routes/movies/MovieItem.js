@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { getMoviePoster } from '../../services/tmdb';
 import style from './style';
 
-const MovieItem = ({ movie, children }) => (<div class={style.movieItem}>
+const MovieItem = ({ movie, children, selectedGenre }) => (<div class={style.movieItem + ' ' + movie.genre_ids.find(g => g === selectedGenre) === null ? style.opaque : ''}>
 	<div class={style.movieItemInfo}>
 		<div class={style.movieItemStart}>
 			<img src={getMoviePoster(movie.poster_path)} />
@@ -14,7 +14,7 @@ const MovieItem = ({ movie, children }) => (<div class={style.movieItem}>
 			<div>{movie.overview}</div>
 		</div>
 	</div>
-	{children}
+	{movie.genre_ids.find(g => g === selectedGenre) === null ? null : children}
 </div>);
 
 export default MovieItem;
